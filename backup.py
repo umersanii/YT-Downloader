@@ -1,3 +1,5 @@
+
+from termcolor import colored
 import tkinter as tk
 from tkinter import filedialog
 import customtkinter as ct
@@ -67,24 +69,30 @@ def actual_down(op1, op2, url, path):
             progress = float(progress)
             
             progress = int(progress*100)
+
             if progress < 99:
                 # Video download progress
-                pbar.set((progress/100)/100)
-                print((progress/100)/100)
-
-                # Calculate ETA for video download
-                # eta_seconds = d.get('_eta_seconds')
-                # eta_minutes = eta_seconds // 60
-                # eta_seconds %= 60
-                # eta_str = f"{int(eta_minutes):02d}:{int(eta_seconds):02d}"
-
-                # pperc.configure(text=f"Downloading video {c} of {total_vids} - {int(progress)}% - ETA: {eta_str}",
-                #                 font=("Arial", 12), text_color="#AB8000")
-
-            else:
-                # MP3 download progress
-                pperc.configure(text=f"Downloading MP3 - {progress}",
+                pbar.set((progress/100))
+                eta_seconds = d.get('eta')
+                print(colored("eta_seconds", 'red'))
+                print(type(eta_seconds))
+                try:
+                    eta_minutes = eta_seconds // 60
+                    eta_seconds %= 60
+                    str(eta_seconds)
+                    print(colored(eta_seconds, 'red'))
+                    
+                    eta_str = f"{int(eta_minutes):02d}:{int(eta_seconds):02d}"
+                except:
+                    eta_str = "Unknown"
+                pperc.configure(text=f"Downloading video {c} of {total_vids} - {int(progress)}% - ETA: {eta_str}",
                                 font=("Arial", 12), text_color="#AB8000")
+
+            # else:
+            #     # MP3 download progress
+            #     print(progress/100)
+            #     pperc.configure(text=f"Downloading MP3 - {progress}",
+            #                     font=("Arial", 12), text_color="#AB8000")
 
             splash_screen.update_idletasks()
             c += 1

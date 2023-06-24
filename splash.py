@@ -1,3 +1,4 @@
+from termcolor import colored
 import tkinter as tk
 from tkinter import filedialog
 import customtkinter as ct
@@ -6,7 +7,7 @@ from os import getcwd
 from os import startfile
 from os import open
 from io import open
-import youtube_dlc as yp
+import yt_dlp as yp
 import pytube as yp_back
 import socket
 
@@ -64,32 +65,38 @@ def actual_down(op1, op2, url, path):
     if check_internet_connection() == False:
         pperc.configure(text="Intennet Connection Problem.", text_color="red")
         print("Intenet")
+    print(colored('Pass 1', 'red'))
+    
     try:
-        url_u = playlist_func(url)
-        total_vids = len(url_u)
+        if 'list' in url:
+            url_u = playlist_func(url)
+            total_vids = len(url_u)
+        else:
+             total_vids = 1
     except:
         pass
     print("passed")
-    down = [False]
     def progress_hook(d):
-        nonlocal down
         c=1
         
 
         if d['status'] == 'downloading':
             total_bytes = d.get('total_bytes')
             downloaded_bytes = d.get('downloaded_bytes')
+            
             if total_bytes and downloaded_bytes:
                 progress = ((downloaded_bytes / total_bytes) * 100)
                 pbar.set(progress / 100)
             elapsed_time = d.get('elapsed')
-            if elapsed_time:
-                remaining_bytes = total_bytes - downloaded_bytes
-                download_speed = downloaded_bytes / elapsed_time
-                eta_seconds = remaining_bytes / download_speed
-                eta_minutes = eta_seconds // 60  # Calculate minutes
-                eta_seconds %= 60  # Calculate remaining seconds
-
+            try:
+                if elapsed_time:
+                    remaining_bytes = total_bytes - downloaded_bytes
+                    download_speed = downloaded_bytes / elapsed_time
+                    eta_seconds = remaining_bytes / download_speed
+                    eta_minutes = eta_seconds // 60  # Calculate minutes
+                    eta_seconds %= 60  # Calculate remaining seconds
+            except:
+                pass
                 pperc.configure(text=f"Downloading video {c} of {total_vids}   -    {int(progress)}%      -      ETA:{d.get('_eta_str')}")
 
                 splash_screen.update_idletasks()
@@ -99,11 +106,7 @@ def actual_down(op1, op2, url, path):
                 c+1
 
         elif d['status'] == 'finished':
-            if down == False:
-                pbar.set(1)
-                pperc.configure(text="File Already Downloaded", text_color="green")
-            else:
-                pperc.configure(text="Download Complete", text_color="green")
+            pperc.configure(text="Download Complete", text_color="green")
 
 
 
@@ -121,13 +124,13 @@ def actual_down(op1, op2, url, path):
 
             }
             if check_internet_connection() == True:
+
                 ydl = yp.YoutubeDL(ydl_opts)
-                # for i in url_u:
-                #     ydl.download("https://www.youtube.com/watch?v="+i)
-                ydl.download("https://www.youtube.com/watch?v=y4ES7iZT3KA")
+                ydl.download(url)
         except yp.utils.ExtractorError:
             try:
                 for i in url_u:
+                    print(url_u)
                     y_obj = yp_back("https://www.youtube.com/watch?v=y4ES7iZT3KA")
                     stream = y_obj.streams.get_highest_resolution()
                     stream.download(output_path=path)
