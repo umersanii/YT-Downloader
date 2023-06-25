@@ -174,13 +174,14 @@ def actual_down(op1, op2, url, path):
 ct.set_appearance_mode("System")
 ct.set_default_color_theme("dark-blue")
 bgg = "#b8860b"
+working_directory = getcwd()
 def save_path(path):
     with open('path.txt', 'w') as file:
         file.write(path)
 
 def load_path():
     try:
-        file = open("path.txt", mode='r', encoding='utf-8')
+        file = open(working_directory + "\\data\\txt\\path.txt", mode='r', encoding='utf-8')
         content = file.read()
         file.close()
         return content.strip()  
@@ -201,7 +202,7 @@ def pathf():
     return path
 def readme():
     try:
-        startfile('Read Me.txt')
+        startfile(working_directory + '\\data\\txt\\Read Me.txt')
     except:
         pass
 
@@ -210,7 +211,7 @@ def main_window():
     win.title("tbd")
     win.resizable (False,False)
     win.geometry("680x560")
-    imagel =ImageTk.PhotoImage(Image.open( "C:\\Users\\iamum\Downloads\\bg.png"))
+    imagel =ImageTk.PhotoImage(Image.open(working_directory + "\\data\\UI\\bg.png"))
     framem = ct.CTkLabel(master=win, image=imagel )
     framem.pack(fill="both", expand=True)
     
@@ -227,8 +228,8 @@ def main_window():
         folder_label.configure(image=ctk_folder)
 
 
-    folder_icon = Image.open("C:\\Users\\iamum\\Downloads\\folder.png")
-    folder_enter_icon = Image.open("C:\\Users\\iamum\\Downloads\\folder_1.png")
+    folder_icon = Image.open(working_directory + "\\data\\UI\\folder.png")
+    folder_enter_icon = Image.open(working_directory + "\\data\\UI\\folder_1.png")
 
     folder_icon = folder_icon.resize((44, 44))
     folder_enter_icon = folder_enter_icon.resize((45,45))
@@ -258,8 +259,8 @@ def main_window():
         setting_label.configure(image=ctk_setting)
 
 
-    setting_icon = Image.open("C:\\Users\\iamum\\Downloads\\question.png")
-    setting_enter_icon = Image.open("C:\\Users\\iamum\\Downloads\\question_1.png")
+    setting_icon = Image.open(working_directory + "\\data\\UI\\question.png")
+    setting_enter_icon = Image.open(working_directory + "\\data\\UI\\question_1.png")
 
     setting_icon = setting_icon.resize((44, 44))
     setting_enter_icon = setting_enter_icon.resize((45, 45))
@@ -412,7 +413,7 @@ splash_screen.geometry(f"{window_width}x{window_height}+{x}+{y}")
 splash_screen.resizable(False, False)
 
 
-file = "Y:/Python/other/1.gif"
+file = working_directory + "\\data\\UI\\splash.gif"
 
 image = Image.open(file)
 
