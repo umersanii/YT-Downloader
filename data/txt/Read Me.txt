@@ -33,5 +33,5 @@ By using YouTube Downloader, you agree to the following terms and conditions:
 ######################################################################## Contact Information: ######################################################################## 
 If you have any questions, feedback, or need support regarding YouTube Downloader, please contact me at one of the following:
 	iamumersani@gmail.com [Email]
-	umersanii [Discord]
+	godblessusani [Discord]
 	https://github.com/umersanii [GitHub]
