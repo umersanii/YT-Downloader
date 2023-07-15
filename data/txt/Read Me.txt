@@ -6,7 +6,7 @@ The Application is capable to download for Youtube Only(for now). But in future,
 -> The Application is capable to download the Youtube list, considering the list is public
 -> The Application relies on Youtube API called Youtube_dlc. If for any reason the the API is down the application won't be able to download. However a backup download API is expected in the 
    next release, if it is to come.
-######################################################################## How to Use YouTube Downloader: ######################################################################## 
+######################################################################## How to Use YT Downloader: ######################################################################## 
 Follow the steps below to download YouTube videos using the application:
 
 1. Launch YouTube Downloader on your device.
@@ -19,8 +19,15 @@ Follow the steps below to download YouTube videos using the application:
 
 5. Click the "Download" button to initiate the download process. The application will start downloading the video or audio according to your chosen options. The progress and status will be displayed on the screen.
 6. Once the download is complete, you can find the downloaded file in the selected destination folder.
-Please note you have to select a destination folder on your device where you want to save the downloaded video or audio. If no destination folder is selected, the downloaded file will be downloaded the installed directory of this software.
+Please note you have to select a destination folder on your device where you want to save the downloaded video or audio. If no destination folder is selected, the downloaded file will be downloaded the installed directory
+of this software.
 
+
+There are three buttons that perfom their own designated functions:
+
+1.  LOGS : Which will open a logs.txt file i.e Record of all the Downloaded files
+2.  CHANGE FOLDER : Which will change the destination of the downloaded folder
+3.  OPEN README : Which will open this Readme File
 ######################################################################## Terms of Service: ######################################################################## 
 By using YouTube Downloader, you agree to the following terms and conditions:
 
@@ -35,3 +42,5 @@ If you have any questions, feedback, or need support regarding YouTube Downloade
 	iamumersani@gmail.com [Email]
 	godblessusani [Discord]
 	https://github.com/umersanii [GitHub]
+
+																						YT Downloader 1.0
