@@ -2,29 +2,19 @@
 ### Audio/Video Downloader
 
 ## External Libraries used include:
-- termcolor
 - tkinter
-- customtkinte
+- customtkinter
 - PIL
 - yt_dlp
-- pytube
 - socket
 
 You can install them using pip install ***library_name_here***
 
 ## User Guide
 This document provides important information on how to use the application and outlines the terms of service that apply to your use of the software.
-#### Some of the websites that the downloader can download from are:
-
-- YouTube
-- Vimeo
-- Dailymotion
-- Facebook
-- Instagram
-- Twitter
-- SoundCloud
-- TikTok
-- Reddit
+#### 
+If you want to download the setup for the Exe File. You can get it from this [link](https://drive.google.com/file/d/14mBsA8wRVkyGG9Pn3a4hi7TeQDrN58vG/view?usp=drive_link)
+The Program is capable to download YT videos in High Quality Audio/Video in MP4/MP3/WEBM Format. It can also download A Youtube Playlist
 
 ### How to Use YouTube Downloader:
 Follow the steps below to download YouTube videos using the application:
