@@ -1,4 +1,4 @@
-from tkinter import BooleanVar, StringVar, filedialog
+from tkinter import BooleanVar, StringVar, filedialog, Menu, END
 from customtkinter import set_appearance_mode, set_default_color_theme, CTk, CTkLabel, CTkFrame, CTkCheckBox, CTkButton, CTkProgressBar, CTkEntry
 from PIL import Image, ImageTk
 from os import getcwd
@@ -29,7 +29,7 @@ def check_valid_url(video_url):
 
 def log(title, e):
     working_directory = getcwd()
-    with open(working_directory + "\\data\\txt\\logs.txt",'a') as wri:  # Replace with the actual file path
+    with open("data\\txt\\logs.txt",'a', encoding='utf-8') as wri:  # Replace with the actual file path
         if title == None:
             wri.write("******************************************************************************************************************************************************************************************\n\n")
             wri.write("\tERROR\n")
@@ -41,12 +41,20 @@ def log(title, e):
             wri.write("Can't Debug")
             wri.write("\n\n")
         else:
-            currenttime = datetime.now()
-            formattedtime = currenttime.strftime("%H:%M:%S")
-            formatteddate = currenttime.strftime("%Y-%m-%d")
-            wri.write("******************************************************************************************************************************************************************************************\n\n")
-            wri.write("Downloaded " + title + " on " + formatteddate + " at " + formattedtime)
-            wri.write("\n\n")
+            try:
+                currenttime = datetime.now()
+                formattedtime = currenttime.strftime("%H:%M:%S")
+                formatteddate = currenttime.strftime("%Y-%m-%d")
+                wri.write("******************************************************************************************************************************************************************************************\n\n")
+                wri.write("Downloaded " + title + " on " + formatteddate + " at " + formattedtime)
+                wri.write("\n\n")
+            except:
+                currenttime = datetime.now()
+                formattedtime = currenttime.strftime("%H:%M:%S")
+                formatteddate = currenttime.strftime("%Y-%m-%d")
+                wri.write("******************************************************************************************************************************************************************************************\n\n")
+                wri.write("Downloaded on " + formatteddate + " at " + formattedtime)
+                wri.write("\n\n")
 def playlist_func(url):
     if('list' in url):
         ydl_opts = {
@@ -190,10 +198,13 @@ def actual_down(op1, op2, url, path):
 ##########################################################UI################################################################
 set_appearance_mode("System")
 set_default_color_theme("dark-blue")
+
 bgg = "#b8860b"
 working_directory = getcwd()
 def save_path(path):
-    with open('path.txt', 'w') as file:
+    with open('data\\txt\\path.txt', 'w') as file:
+        print(path)
+        print("path at pass 2")
         file.write(path)
 
 def load_path():
@@ -203,37 +214,50 @@ def load_path():
             return content.strip()  
     except FileNotFoundError:
         return ''
-
+    
 def get_path():
-    path = filedialog.askdirectory()
+    pathtemp = load_path()
+    if pathtemp=="":
+        pathtemp==working_directory
+    
+    path = filedialog.askdirectory(initialdir=pathtemp)
     save_path(path)
 
 def pathf():
     path = load_path()
+    print(path)
+    print("yesyseysyesyeysysy")
     if path == '':
         path = getcwd()
     
     return path
 def readme():
     try:
-        startfile(working_directory + '\\data\\txt\\Read Me.txt')
+        startfile('data\\txt\\Read Me.txt')
     except:
         pass
 
 def logsfun():
     try:
-        startfile(working_directory + '\\data\\txt\\logs.txt')
+        startfile('data\\txt\\logs.txt')
     except:
         pass
-
+def opendestinationfolder():
+    try:
+        pathtemp = load_path()
+        if pathtemp == "":
+            startfile(working_directory)
+        startfile(pathtemp)
+    except:
+        pass
 
 def main_window():
     win = CTk()
     win.title("YT Downloader")
-    win.iconbitmap("data\\UI\\ico.ico")
+    win.iconbitmap("data\\UI\\logo.ico")
     win.resizable (False,False)
     win.geometry("680x560")
-    imagel =ImageTk.PhotoImage(Image.open(working_directory + "\\data\\UI\\bg.png"))
+    imagel =ImageTk.PhotoImage(Image.open("data\\UI\\bg.png"))
     framem = CTkLabel(master=win, image=imagel )
     framem.pack(fill="both", expand=True)
 
@@ -250,8 +274,8 @@ def main_window():
         folder_label.configure(image=ctk_folder)
 
 
-    folder_icon = Image.open(working_directory + "\\data\\UI\\folder.png")
-    folder_enter_icon = Image.open(working_directory + "\\data\\UI\\folder_1.png")
+    folder_icon = Image.open("data\\UI\\foldersetting.png")
+    folder_enter_icon = Image.open("data\\UI\\foldersetting_1.png")
 
     folder_icon = folder_icon.resize((44, 44))
     folder_enter_icon = folder_enter_icon.resize((45,45))
@@ -281,8 +305,8 @@ def main_window():
         setting_label.configure(image=ctk_setting)
 
 
-    setting_icon = Image.open(working_directory + "\\data\\UI\\question.png")
-    setting_enter_icon = Image.open(working_directory + "\\data\\UI\\question_1.png")
+    setting_icon = Image.open("data\\UI\\question.png")
+    setting_enter_icon = Image.open("data\\UI\\question_1.png")
 
     setting_icon = setting_icon.resize((44, 44))
     setting_enter_icon = setting_enter_icon.resize((45, 45))
@@ -311,8 +335,8 @@ def main_window():
         log_label.configure(image=ctk_log)
 
 
-    log_icon = Image.open(working_directory + "\\data\\UI\\log.png")
-    log_enter_icon = Image.open(working_directory + "\\data\\UI\\log_1.png")
+    log_icon = Image.open("data\\UI\\log.png")
+    log_enter_icon = Image.open("data\\UI\\log_1.png")
 
     log_icon = log_icon.resize((44, 44))
     log_enter_icon = log_enter_icon.resize((45, 45))
@@ -329,10 +353,42 @@ def main_window():
     log_label.bind("<Leave>", on_leave_log)
     log_label.place(x=376, y =10)
 
+    
+    def on_enter_log(event):
+        odbtn_label.configure(image=ctk_image_odbtn_icon)
+        odbtn_label_text.place(x=50, y=15)
+
+    def on_leave_log(event):
+        try:
+            odbtn_label_text.place_forget()
+        except:
+            pass
+        odbtn_label.configure(image=ctk_odbtn)
+
+
+    opendest_icon = Image.open("data\\UI\\folder.png")
+    opendest_enter_icon = Image.open("data\\UI\\folder_1.png")
+
+    opendest = opendest_icon.resize((44, 44))
+    opendest_enter_icon = opendest_enter_icon.resize((45, 45))
+
+    ctk_odbtn = ImageTk.PhotoImage(opendest)
+    ctk_image_odbtn_icon = ImageTk.PhotoImage(opendest_enter_icon)
+    odbtn_label = CTkLabel(win, image=ctk_odbtn, text="")
+    
+    odbtn_label_text = CTkLabel(win, text="Open Destination Folder", font=("Arial", 9))
+    odbtn_label.configure(fg_color=black)
+
+    odbtn_label.bind("<Button-1>", lambda event: opendestinationfolder())
+    odbtn_label.bind("<Enter>", on_enter_log)
+    odbtn_label.bind("<Leave>", on_leave_log)
+    odbtn_label.place(x=165, y =10)
+
     frame = CTkFrame(master=win)
     frame.configure(height=422, width=330)
     frame.propagate(0)
     frame.place(x=175, y=68)
+
     label = CTkLabel(master=frame, text="YT Downloader", font=("Arial", 26, "bold"), text_color="#AB8000")
     label.pack(padx=5, pady=15)
 
@@ -390,6 +446,9 @@ def main_window():
 
         pperc = CTkLabel(frame, text="0%", text_color=golden)
         pperc.pack()
+       # pperc.place_configure(x=420,y=45)
+
+
 
     def ui():
         destroy_ui()
@@ -408,10 +467,41 @@ def main_window():
             #entryurl.insert(0, placeholder_text)
             entryurl.configure(placeholder_text)
             entryurl.configure(text_color="gray")
+
+    def paste_text():
+        try:
+            content = frame.clipboard_get()
+            entryurl.insert(END, content)
+        except:
+            pass
+
+    def copy_text():
+        try:
+            selected_text = entryurl.selection_get()
+            frame.clipboard_clear()
+            frame.clipboard_append(selected_text)
+        except:
+            pass
+        
+    def show_context_menu(event):
+        menu.tk_popup(event.x_root, event.y_root)
+
+
+    def select_all_text():
+        entryurl.select_range(0, END)
+
+    menu = Menu(frame, tearoff=False)
+    menu.add_command(label="Paste", command=paste_text)
+    menu.add_command(label="Select All", command=select_all_text)
+    menu.add_command(label="Copy", command=copy_text)
+
+
     url_link = StringVar()
     
     entryurl = CTkEntry(frame, width=300, textvariable=url_link)
     entryurl.insert(0, placeholder_text)
+    entryurl.bind("<Button-3>", show_context_menu)
+
     #entryurl.configure(show="*")
     entryurl.configure(fg_color="#141414")
     entryurl.bind("<FocusIn>", on_entry_focus_in)
@@ -441,7 +531,7 @@ splash_screen.geometry(f"{window_width}x{window_height}+{x}+{y}")
 splash_screen.resizable(False, False)
 
 
-file = working_directory + "\\data\\UI\\splash.gif"
+file = "data\\UI\\splash.gif"
 image = Image.open(file)
 label = CTkLabel(splash_screen)
 label.pack()
